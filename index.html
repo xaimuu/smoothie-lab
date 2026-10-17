@@ -59,11 +59,6 @@ body{background-color:#fff3ef;background-image:radial-gradient(#ffd6de 1.2px,tra
 #smoothie-lab-calculator .oats-divider{display:flex;align-items:center;gap:12px;margin:29px 0 16px;color:#9c795a;font-size:.79rem;font-weight:800;letter-spacing:.025em;text-align:center}
 #smoothie-lab-calculator .oats-divider::before,#smoothie-lab-calculator .oats-divider::after{content:"";height:1px;flex:1;background:rgba(154,103,29,.22)}
 #smoothie-lab-calculator .hidden{display:none!important}
-/* Make custom topping inputs visible whenever Other is selected, including after mobile browser form-state restoration. */
-#smoothie-lab-calculator .field:has(> .cols #sl-top-other-1 option[value="other"]:checked) #sl-top-other-1-qty-holder,
-#smoothie-lab-calculator .field:has(> .cols #sl-top-other-1 option[value="other"]:checked) #sl-top-other-1-name-holder,
-#smoothie-lab-calculator .field:has(> .cols #sl-top-other-2 option[value="other"]:checked) #sl-top-other-2-qty-holder,
-#smoothie-lab-calculator .field:has(> .cols #sl-top-other-2 option[value="other"]:checked) #sl-top-other-2-name-holder{display:block!important}
 #smoothie-lab-calculator .checkgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);grid-auto-flow:column;gap:10px}
 #smoothie-lab-calculator .checkgrid label{font-weight:600;display:flex;align-items:center;gap:8px;margin:0;background:#fff;border-radius:12px;padding:9px 10px;cursor:pointer}
 #smoothie-lab-calculator input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent);flex:none}
@@ -231,7 +226,6 @@ lastCopy='Smoothie\n\n'+(items.length?items.map(x=>`• ${x.name} – ${x.cal===
 root.addEventListener('input',e=>{if(!e.target.matches('input,select,textarea'))return;const id=e.target.id;
 if(id==='sl-banana-type')get('banana-qty').value='';if(id==='sl-greens')get('greens-qty').value='';if(id==='sl-pb2')get('pb2-qty').value='';if(id==='sl-peanut')get('peanut-qty').value='';if(id==='sl-nutella')get('nutella-qty').value='';if(id==='sl-walnut')get('walnut-qty').value='';if(id==='sl-top-date')get('top-date-qty').value='';if(id==='sl-top-bar')get('top-bar-qty').value='';for(let i=1;i<=2;i++){if(id==='sl-top-other-'+i&&val('top-other-'+i)!=='other'){get('top-other-cal-'+i).value='';get('top-other-name-'+i).value='';}}if(id==='sl-sweetener')get('sweetener-qty').value='';if(id==='sl-kick-1')get('kick-qty-1').value='';if(id==='sl-kick-2')get('kick-qty-2').value='';if(id==='sl-milk')get('milk-qty').value='';if(id==='sl-shake'){get('shake-qty').value='';get('shake-flavor').value='';}if(id==='sl-powder'){get('powder-qty').value='';get('powder-flavor').value='';}if(id==='sl-yogurt'){get('yogurt-qty').value='';get('yogurt-flavor').value='';get('yoplait-flavor').value='';}if(id==='sl-avocado-type'){get('avocado-qty').value='';}if(id==='sl-tofu')get('tofu-grams').value='';if(id==='sl-oat-type')get('oat-qty').value='';if(/^sl-fruit-[123]$/.test(id)){get('fruit-qty-'+id.slice(-1)).value='';get('fruit-grams-'+id.slice(-1)).value='';get('fruit-cal-'+id.slice(-1)).value='';get('fruit-name-'+id.slice(-1)).value='';}calculate();});
 root.addEventListener('change',e=>{if(e.target.matches('input,select,textarea'))calculate();});
-window.addEventListener('pageshow',()=>calculate()); // Sync conditional fields with restored Safari selection state.
 get('expand-all').addEventListener('click',()=>root.querySelectorAll('details.section').forEach(x=>x.open=true));
 get('collapse-all').addEventListener('click',()=>root.querySelectorAll('details.section').forEach(x=>x.open=false));
 get('clear').addEventListener('click',()=>{root.querySelectorAll('input,textarea').forEach(x=>{if(x.type==='checkbox')x.checked=false;else x.value='';});root.querySelectorAll('select').forEach(x=>x.value='');get('copy-status').textContent='';calculate();});
