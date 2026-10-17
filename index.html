@@ -14,7 +14,7 @@ html,body{margin:0;padding:0}
 body{background-color:#fff3ef;background-image:radial-gradient(#ffd6de 1.2px,transparent 1.2px);background-size:22px 22px;font-family:"Nunito",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;padding:22px 14px 40px;color:#2e1f36}
 #smoothie-lab-calculator{color:#2e1f36;max-width:760px;margin:0 auto;line-height:1.5;font-size:16px}
 #smoothie-lab-calculator *{box-sizing:border-box}
-#smoothie-lab-calculator .sl-wrap{background:#fff;border-radius:28px;padding:0 22px 22px;overflow:hidden;box-shadow:0 14px 40px rgba(214,51,95,.14)}
+#smoothie-lab-calculator .sl-wrap{background:#fff;border-radius:28px;padding:0 22px 22px;overflow:hidden;overflow:clip;box-shadow:0 14px 40px rgba(214,51,95,.14)}
 #smoothie-lab-calculator .hero{margin:0 -22px 18px}
 #smoothie-lab-calculator .hero img{display:block;width:100%;height:240px;object-fit:cover}
 #smoothie-lab-calculator .stripe{height:12px;background:linear-gradient(90deg,#ff4f79 0 20%,#ff9f1c 20% 40%,#ffd23f 40% 60%,#7bc950 60% 80%,#6b7bff 80% 100%)}
@@ -22,7 +22,7 @@ body{background-color:#fff3ef;background-image:radial-gradient(#ffd6de 1.2px,tra
 #smoothie-lab-calculator h2,#smoothie-lab-calculator h3{font-family:"Fredoka","Nunito",sans-serif;font-weight:600}
 #smoothie-lab-calculator h2{font-size:2.2rem;line-height:1.1;margin:6px 0 4px;color:#d6335f}
 #smoothie-lab-calculator .sub{color:#6d5a72;margin:0 0 18px;font-size:.95rem}
-#smoothie-lab-calculator .dash{background:linear-gradient(135deg,#ff4f79 0%,#ff7a45 50%,#ffb627 100%);border-radius:24px;padding:20px 16px;text-align:center;margin-bottom:6px;color:#fff;position:sticky;top:8px;z-index:5;box-shadow:0 8px 22px rgba(255,79,121,.3)}
+#smoothie-lab-calculator .dash{background:linear-gradient(135deg,#ff4f79 0%,#ff7a45 50%,#ffb627 100%);border-radius:24px;padding:20px 16px;text-align:center;margin-bottom:6px;color:#fff;position:relative;box-shadow:0 8px 22px rgba(255,79,121,.3)}
 #smoothie-lab-calculator .eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.06em;color:#fff;opacity:.95}
 #smoothie-lab-calculator .big{font-family:"Fredoka","Nunito",sans-serif;font-weight:700;font-size:3rem;line-height:1.1;margin:4px 0 12px;text-shadow:0 2px 0 rgba(0,0,0,.08)}
 #smoothie-lab-calculator .macros{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}
@@ -75,8 +75,24 @@ body{background-color:#fff3ef;background-image:radial-gradient(#ffd6de 1.2px,tra
 #smoothie-lab-calculator .clear{background:#fff;color:#2e1f36;border:2px solid rgba(46,31,54,.15)}
 #smoothie-lab-calculator .status{font-size:.85rem;font-weight:700;color:var(--accent);min-height:1.2em}
 #smoothie-lab-calculator .warn{color:#b86200}
-@media(max-width:530px){body{padding:10px 6px 30px}#smoothie-lab-calculator .sl-wrap{padding:0 12px 14px;border-radius:22px}#smoothie-lab-calculator .hero{margin:0 -12px 14px}#smoothie-lab-calculator .hero img{height:180px}#smoothie-lab-calculator h2{font-size:1.85rem}#smoothie-lab-calculator .section>summary{padding:12px 13px}#smoothie-lab-calculator .section-body{padding:0 13px 13px}#smoothie-lab-calculator .macros{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}#smoothie-lab-calculator .macro small{font-size:.66rem}#smoothie-lab-calculator .macro strong{font-size:.8rem}#smoothie-lab-calculator .big{font-size:2.5rem}#smoothie-lab-calculator .cols{gap:7px}#smoothie-lab-calculator input:not([type=checkbox]),#smoothie-lab-calculator select{font-size:14px;padding:9px 6px}#smoothie-lab-calculator .checkgrid label{font-size:.85rem}}
-@media(prefers-reduced-motion:reduce){#smoothie-lab-calculator button{transition:none}}
+#smoothie-lab-calculator .mini-dash{position:fixed;top:6px;left:50%;width:calc(100% - 20px);max-width:740px;z-index:20;display:flex;align-items:center;gap:10px;padding:7px 10px 7px 14px;border-radius:16px;background:linear-gradient(135deg,#ff4f79 0%,#ff7a45 50%,#ffb627 100%);color:#fff;box-shadow:0 6px 18px rgba(255,79,121,.35);cursor:pointer;transform:translate(-50%,-140%);opacity:0;pointer-events:none;transition:transform .22s ease,opacity .22s ease}
+#smoothie-lab-calculator .mini-dash.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+#smoothie-lab-calculator .mini-cal{font-family:"Fredoka","Nunito",sans-serif;font-weight:700;font-size:1.35rem;line-height:1;white-space:nowrap;text-shadow:0 1px 0 rgba(0,0,0,.08)}
+#smoothie-lab-calculator .mini-cal small{font-size:.8rem;font-weight:600}
+#smoothie-lab-calculator .mini-macros{flex:1;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;min-width:0}
+#smoothie-lab-calculator .mini-macro{background:#fff;border-radius:9px;padding:3px 2px;text-align:center;line-height:1.15}
+#smoothie-lab-calculator .mini-macro small{display:block;font-size:.6rem;font-weight:800}
+#smoothie-lab-calculator .mini-macro strong{display:block;font-size:.72rem;color:#2e1f36;white-space:nowrap}
+#smoothie-lab-calculator .mini-macro:nth-child(1) small{color:#d6335f}
+#smoothie-lab-calculator .mini-macro:nth-child(2) small{color:#3a8a2c}
+#smoothie-lab-calculator .mini-macro:nth-child(3) small{color:#b86200}
+#smoothie-lab-calculator .mini-macro:nth-child(4) small{color:#4458c9}
+#smoothie-lab-calculator .mini-macro:nth-child(5) small{color:#8c44bb}
+@media(max-width:380px){#smoothie-lab-calculator .mini-dash{gap:7px;padding:7px 8px 7px 11px}#smoothie-lab-calculator .mini-cal{font-size:1.15rem}#smoothie-lab-calculator .mini-macros{gap:3px}#smoothie-lab-calculator .mini-macro strong{font-size:.68rem}#smoothie-lab-calculator .mini-macro small{font-size:.56rem}}
+#smoothie-lab-calculator .mini-dash:focus-visible{outline:3px solid #6b7bff;outline-offset:2px}
+@media(max-width:530px){body{padding:10px 6px 30px}#smoothie-lab-calculator .sl-wrap{padding:0 12px 14px;border-radius:22px}#smoothie-lab-calculator .hero{margin:0 -12px 14px}#smoothie-lab-calculator .hero img{height:180px}#smoothie-lab-calculator h2{font-size:1.85rem}#smoothie-lab-calculator .section>summary{padding:12px 13px}#smoothie-lab-calculator .section-body{padding:0 13px 13px}#smoothie-lab-calculator .macros{grid-template-columns:repeat(5,minmax(0,1fr));gap:4px}#smoothie-lab-calculator .macro small{font-size:.66rem}#smoothie-lab-calculator .macro strong{font-size:.8rem}#smoothie-lab-calculator .big{font-size:2.5rem}#smoothie-lab-calculator .cols{gap:7px}#smoothie-lab-calculator input:not([type=checkbox]),#smoothie-lab-calculator select{font-size:16px;padding:9px 6px}#smoothie-lab-calculator textarea{font-size:16px}#smoothie-lab-calculator .checkgrid label{font-size:.85rem}}
+@media(hover:none) and (pointer:coarse){#smoothie-lab-calculator input:not([type=checkbox]),#smoothie-lab-calculator select,#smoothie-lab-calculator textarea{font-size:16px}}
+@media(prefers-reduced-motion:reduce){#smoothie-lab-calculator button,#smoothie-lab-calculator .mini-dash{transition:none}}
 </style>
 </head>
 <body>
@@ -164,6 +180,14 @@ ${section('15. Finishing Touches',`<div class="checkgrid">${extras.map((x,i)=>`<
 ${section('16. Top It Off!',`<p class="note" style="margin-top:0">Optional toppings for yogurt and smoothie bowls. Packaged topping nutrition is estimated and may vary by product.</p><div class="field"><div class="cols">${selectField('top-date','Medjool dates',[['','None'],['plain','Plain'],['filled','Almond butter-filled']])}${selectField('top-date-qty','Quantity',[['','Select quantity']])}</div></div><div class="field"><div class="cols">${selectField('top-bar','Protein bar',[['','None'],['barebells','Barebells Cookies & Caramel']])}${selectField('top-bar-qty','Quantity',[['','Select quantity']])}</div></div><div class="field"><div class="cols">${selectField('walnut','Nuts',[['','None'],['walnuts','Walnuts'],['pecans','Pecans'],['almonds','Almonds']])}${selectField('walnut-qty','Quantity',[['','Select quantity']])}</div></div>${[1,2].map(i=>`<div class="field"><div class="cols">${selectField('top-other-'+i,'Other topping #'+i,[['','None'],['other','Other']])}<div id="sl-top-other-${i}-qty-holder" class="hidden">${field('top-other-cal-'+i,'Calories',inp('top-other-cal-'+i,'Enter calories','number'))}</div></div><div id="sl-top-other-${i}-name-holder" class="field hidden">${field('top-other-name-'+i,'Topping and quantity',inp('top-other-name-'+i,'e.g., ¼ cup granola'))}</div></div>`).join('')}`)}
 ${section('17. The Final Creation',`<div id="sl-ingredients"><p class="note">No ingredients selected.</p></div><div class="sum-total"><span>TOTAL ESTIMATED CALORIES</span><span id="sl-summary-cal">0 cal</span></div><div id="sl-summary-macros"></div><p id="sl-partial-summary" class="note hidden">Macro totals are incomplete because manually entered ingredients have unknown nutritional values.</p><div class="buttons"><button type="button" class="copy" id="sl-copy">Copy Smoothie</button><button type="button" class="clear" id="sl-clear">Clear All</button></div><div class="status" id="sl-copy-status" aria-live="polite"></div><p class="note">Nutrition values are estimates and may vary by brand, flavor, serving size, and preparation. Manually entered ingredients count toward calories only.</p><p class="note">Have a suggestion or idea for The Smoothie Lab? <a href="https://idreamofcreami.wordpress.com/smoothie-lab-feedback/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:700;text-decoration:underline">I’d love to hear from you!</a></p>`)}
 </div>`;
+root.insertAdjacentHTML('beforeend',`<div class="mini-dash" id="sl-mini" role="button" tabindex="-1" aria-hidden="true" aria-label="Back to nutrition dashboard"><div class="mini-cal"><span id="sl-mini-cal">0</span> <small>cal</small></div><div class="mini-macros">${['Protein','Fiber','Carbs','Fat','Sugar'].map((m,i)=>`<div class="mini-macro"><small>${m}</small><strong id="sl-mini-${i}">0.0g</strong></div>`).join('')}</div></div>`);
+(function(){const dash=root.querySelector('.dash'),mini=root.querySelector('#sl-mini');if(!dash||!mini)return;
+ const setMini=on=>{mini.classList.toggle('show',on);mini.setAttribute('aria-hidden',on?'false':'true');mini.tabIndex=on?0:-1;};
+ if('IntersectionObserver' in window){new IntersectionObserver(([e])=>setMini(!e.isIntersecting&&e.boundingClientRect.top<0)).observe(dash);}
+ else{const check=()=>setMini(dash.getBoundingClientRect().bottom<0);window.addEventListener('scroll',check,{passive:true});check();}
+ const back=()=>dash.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+ mini.addEventListener('click',back);mini.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();back();}});
+})();
 const palette=[['#d6335f','#fff0f4'],['#b86200','#fff5e3'],['#3a8a2c','#f0f9ea'],['#4458c9','#eef0ff'],['#8c44bb','#f6eefc']];root.querySelectorAll('.section').forEach((s,i)=>{const p=palette[i%palette.length];s.style.setProperty('--accent',p[0]);s.style.setProperty('--tint',p[1]);});
 const get=id=>root.querySelector('#sl-'+id),val=id=>get(id)?.value||'',show=(id,yes)=>get(id)?.classList.toggle('hidden',!yes),format=n=>n.toFixed(1),valid=s=>s.trim()!==''&&Number.isFinite(Number(s))&&Number(s)>=0;
 const setChoices=(id,choices)=>{const node=get(id),old=node.value;node.innerHTML=opts(choices);if(choices.some(x=>x[0]===old))node.value=old;node.disabled=choices.length<=1;};
@@ -217,7 +241,7 @@ for(let i=1;i<=2;i++){const k=val('kick-'+i),q=val('kick-qty-'+i);if(!k||!q)cont
 const sw=sweeteners[val('sweetener')];if(sw&&val('sweetener-qty')){const q=Number(val('sweetener-qty')),k=val('sweetener');let qty;if(k==='stevia')qty=`${q} packet${q===1?'':'s'}`;else if(k==='torani')qty=q===1?'1 tsp':q===3?'1 tbsp':'2 tbsp';else qty=q===3?'1 tbsp':`${q} tsp`;const flavor=k==='torani'?val('torani-flavor').trim():'';add(`${qty} ${sw[0]}${flavor?' ('+flavor+')':''}`,k==='torani'?0:sw[1]*q,sw[2].map(x=>k==='torani'?0:x*q));}
 extras.forEach((name,i)=>{if(get('extra-'+i).checked)add(name,0,[0,0,0,0,0]);});for(let i=1;i<=2;i++){if(val('custom-name-'+i).trim()&&valid(val('custom-cal-'+i)))add(val('custom-name-'+i).trim(),Number(val('custom-cal-'+i)),[0,0,0,0,0],true);}
 const calories=items.reduce((sum,x)=>sum+x.cal,0),macros=[0,1,2,3,4].map(i=>items.reduce((sum,x)=>sum+x.n[i],0)),partial=items.some(x=>x.isManual);
-get('calories').textContent=Math.round(calories);get('summary-cal').textContent=Math.round(calories)+' cal';macros.forEach((x,i)=>get('macro-'+i).textContent=format(x)+' g');show('partial-top',partial);show('partial-summary',partial);
+get('calories').textContent=Math.round(calories);get('summary-cal').textContent=Math.round(calories)+' cal';macros.forEach((x,i)=>get('macro-'+i).textContent=format(x)+' g');get('mini-cal').textContent=Math.round(calories);macros.forEach((x,i)=>get('mini-'+i).textContent=(x>=100?Math.round(x):format(x))+'g');show('partial-top',partial);show('partial-summary',partial);
 root.querySelectorAll('details.section').forEach(sec=>{const has=Array.from(sec.querySelectorAll('input,select')).some(el=>el.type==='checkbox'?el.checked:!el.disabled&&el.value!==''&&el.value!=='none'&&el.value!=='other'&&!(el.type==='number'&&Number(el.value)===0));sec.classList.toggle('has-selection',has);});
 get('ingredients').innerHTML=items.length?items.map(x=>`<div class="summary-line"><span>${esc(x.name)}${x.isManual?' <small class="warn">(calories only)</small>':''}</span><span>${x.cal===0?'~0':Math.round(x.cal)} cal</span></div>`).join(''):'<p class="note">No ingredients selected.</p>';
 get('summary-macros').innerHTML=['Protein','Fiber','Carbohydrates','Fat','Sugar'].map((n,i)=>`<div class="sum-macro"><span>${n}${partial?' (partial)':''}</span><span>${format(macros[i])} g</span></div>`).join('');
