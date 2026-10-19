@@ -317,6 +317,19 @@ const inspirations=[
   steps:[['milk','water'],['milk-qty','.75'],['powder','on'],['powder-qty','0.5'],['powder-flavor','Vanilla Ice Cream'],['yogurt','dannon'],['yogurt-qty','container'],['yogurt-flavor','Cherry'],['banana-type','fresh'],['banana-qty','6'],['fruit-1','cherries'],['fruit-qty-1','.75'],['fruit-2','pineapple'],['fruit-qty-2','.75'],['greens','spinach'],['greens-qty','.5']],
   extras:['Vanilla extract'],
   note:'Best with frozen cherries, pineapple, and banana, plus loosely packed frozen baby spinach, for a thick, frosty texture. Add ½ tsp vanilla extract.'},
+ {name:'Blueberry Vanilla Banana',
+  steps:[['milk','water'],['milk-qty','.5'],['powder','on'],['powder-qty','1'],['powder-flavor','Vanilla Ice Cream'],['yogurt','dannon'],['yogurt-qty','container'],['yogurt-flavor','Blueberry'],['banana-type','fresh'],['banana-qty','7'],['fruit-1','blueberries'],['fruit-qty-1',String(1/3)],['greens','spinach'],['greens-qty','.5']],
+  extras:['Vanilla extract','Cinnamon'],
+  note:'A pinch of cinnamon pairs wonderfully with the banana and blueberry.'},
+ {name:'Blueberry Banana',
+  steps:[['milk','water'],['milk-qty','.5'],['yogurt','dannon'],['yogurt-qty','container'],['yogurt-flavor','Blueberry'],['banana-type','fresh'],['banana-qty','7'],['fruit-1','blueberries'],['fruit-qty-1','.5'],['greens','spinach'],['greens-qty','.5']],
+  extras:['Cinnamon'],
+  note:'A pinch of cinnamon pairs wonderfully with the banana and blueberry.'},
+ {name:'Strawberry Vanilla Banana',
+  steps:[['milk','water'],['milk-qty','.5'],['powder','on'],['powder-qty','1'],['powder-flavor','Vanilla Ice Cream'],['yogurt','dannon'],['yogurt-qty','container'],['yogurt-flavor','Strawberry'],['banana-type','fresh'],['banana-qty','7'],['fruit-1','strawberries'],['fruit-qty-1',String(1/3)],['greens','spinach'],['greens-qty','.5']],
+  extras:['Vanilla extract']},
+ {name:'Strawberry Banana',
+  steps:[['milk','water'],['milk-qty','.5'],['yogurt','dannon'],['yogurt-qty','container'],['yogurt-flavor','Strawberry'],['banana-type','fresh'],['banana-qty','7'],['fruit-1','strawberries'],['fruit-qty-1','.5'],['greens','spinach'],['greens-qty','.5']]},
  {name:'Caramel Apple Macchiato',
   steps:[['shake','premier'],['shake-qty','11.5-half'],['shake-flavor','Caramel Macchiato'],['yogurt','dannon'],['yogurt-qty','container'],['yogurt-flavor','Caramel Apple Pie'],['banana-type','fresh'],['banana-qty','9'],['fruit-1','apple'],['fruit-qty-1','1'],['greens','spinach'],['greens-qty','.5']],
   extras:['Cinnamon'],
@@ -334,7 +347,7 @@ function applyInspiration(r){
  resetLayout();touched.forEach(el=>{const d=el.closest('details.section');if(d)d.open=true;});
 }
 function closeInspo(focusBtn){inspoMenu.hidden=true;inspoBtn.setAttribute('aria-expanded','false');if(focusBtn)inspoBtn.focus();}
-inspoMenu.innerHTML='<button type="button" role="menuitem" class="inspo-clear" data-i="clear">Clear All &amp; Start Fresh</button><hr>'+
+inspoMenu.innerHTML='<button type="button" role="menuitem" class="inspo-clear" data-i="clear">Clear All</button><hr>'+
  inspirations.map((r,i)=>[r,i]).sort((a,b)=>a[0].name.localeCompare(b[0].name,'en',{sensitivity:'base'})).map(([r,i])=>`<button type="button" role="menuitem" data-i="${i}">${r.name}</button>`).join('');
 inspoBtn.addEventListener('click',()=>{const open=inspoMenu.hidden;inspoMenu.hidden=!open;inspoBtn.setAttribute('aria-expanded',String(open));if(open)inspoMenu.querySelector('button').focus();});
 inspoMenu.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.i==='clear'){get('clear').click();resetLayout();}else applyInspiration(inspirations[Number(b.dataset.i)]);closeInspo(true);});
