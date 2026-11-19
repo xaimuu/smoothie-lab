@@ -236,6 +236,8 @@ ${section('17. The Final Creation',`<div id="sl-ingredients"><p class="note">No 
 root.insertAdjacentHTML('beforeend',`<div class="mini-dash" id="sl-mini" role="button" tabindex="-1" aria-hidden="true" aria-label="Back to nutrition dashboard"><div class="mini-cal"><span id="sl-mini-cal">0</span> <small>cal</small></div><div class="mini-macros">${['Protein','Fiber','Carbs','Fat','Sugar'].map((m,i)=>`<div class="mini-macro"><small>${m}</small><strong id="sl-mini-${i}">0.0g</strong></div>`).join('')}</div></div>`);
 (function(){const dash=root.querySelector('.dash'),mini=root.querySelector('#sl-mini');if(!dash||!mini)return;
  const setMini=on=>{mini.classList.toggle('show',on);mini.setAttribute('aria-hidden',on?'false':'true');mini.tabIndex=on?0:-1;};
+ // iPhones shift the visible screen when the keyboard opens; keep the slim bar pinned to what's actually on screen.
+ const vv=window.visualViewport;if(vv){const place=()=>{mini.style.top=(6+Math.max(0,vv.offsetTop))+'px';};vv.addEventListener('resize',place);vv.addEventListener('scroll',place);place();}
  if('IntersectionObserver' in window){new IntersectionObserver(([e])=>setMini(!e.isIntersecting&&e.boundingClientRect.top<0)).observe(dash);}
  else{const check=()=>setMini(dash.getBoundingClientRect().bottom<0);window.addEventListener('scroll',check,{passive:true});check();}
  const back=()=>dash.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
