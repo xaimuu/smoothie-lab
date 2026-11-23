@@ -57,6 +57,16 @@ body{background-color:#fff3ef;background-image:radial-gradient(#ffd6de 1.2px,tra
 #smoothie-lab-calculator .section-tools .inspo-menu button:hover,#smoothie-lab-calculator .section-tools .inspo-menu button:focus-visible{background:#fff0f4;outline:none}
 #smoothie-lab-calculator .section-tools .inspo-menu .inspo-clear{color:#a52857}
 #smoothie-lab-calculator .inspo-menu hr{border:0;border-top:1px solid #f5cada;margin:4px 6px}
+/*paste*/#smoothie-lab-calculator .paste-panel{margin:4px 0 12px;padding:14px;border-radius:18px;background:#fff;border:2px solid transparent;background:linear-gradient(#fff,#fff) padding-box,linear-gradient(90deg,#ff9bb3,#ffb48e,#ffd58a) border-box}
+#smoothie-lab-calculator .paste-panel[hidden]{display:none}
+#smoothie-lab-calculator .paste-panel label{display:block;font-weight:800;color:#a52857;margin-bottom:6px}
+#smoothie-lab-calculator .paste-panel textarea{width:100%;min-height:130px;resize:vertical}
+#smoothie-lab-calculator .paste-actions{display:flex;gap:8px;margin-top:10px}
+#smoothie-lab-calculator .paste-actions button{flex:1;padding:11px 12px}
+#smoothie-lab-calculator .paste-go{background:linear-gradient(135deg,#ff4f79,#ff7a45);color:#fff}
+#smoothie-lab-calculator .paste-cancel{background:#fff0f4;color:#a52857;border:1px solid #f5cada}
+#smoothie-lab-calculator .paste-result{margin-top:10px;font-size:.88rem;line-height:1.45}
+#smoothie-lab-calculator .paste-result .bad{color:#c2185b;font-weight:700}
 #smoothie-lab-calculator .inspo-menu .inspo-head{padding:8px 12px 2px;font-size:.74rem;font-weight:700;color:#9b6a80}
 @media(max-width:379px){#smoothie-lab-calculator .section-tools{grid-template-columns:repeat(2,minmax(0,1fr))}#smoothie-lab-calculator .section-tools .inspo{grid-column:1/-1}}
 #smoothie-lab-calculator .section-selected{display:none;border-radius:50%;background:var(--accent);width:7px;height:7px;flex:none}
@@ -220,7 +230,7 @@ const manual=(prefix,description)=>`<div id="sl-${prefix}-manual" class="field h
 const eachSeed=(key)=>`<div class="field">${selectField('seed-'+key,seeds[key][0],[['','None'],['1','1 tsp'],['2','2 tsp'],['3','1 tbsp'],['6','2 tbsp']])}</div>`;
 const eachGreen=(key)=>`<div class="field">${selectField('green-'+key,greens[key][0],[['','None'],['.5','½ cup'],['1','1 cup'],['2','2 cups']])}</div>`;
 root.innerHTML=`<div class="sl-wrap"><div class="hero"><img src="header.jpg" alt="Smoothie" onerror="this.closest('.hero').classList.add('no-photo')"><div class="stripe"></div></div><h2>The Smoothie Lab</h2><p class="sub">A little smoothie science! Mix, match, and discover your next favorite blend.</p><div class="dash"><div class="eyebrow">NUTRITION DASHBOARD</div><div class="big"><span id="sl-calories">0</span> cal</div><div class="macros">${['Protein','Fiber','Carbs','Fat','Sugar'].map((m,i)=>`<div class="macro"><small>${m}</small><strong id="sl-macro-${i}">0.0 g</strong></div>`).join('')}</div><div id="sl-partial-top" class="note hidden">Macro totals are partial because manual ingredients have unknown nutrients.</div></div>
-<div class="section-tools"><div class="inspo"><button id="sl-inspo" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sl-inspo-menu">Inspiration</button><div id="sl-inspo-menu" class="inspo-menu" role="menu" hidden></div></div><div class="tool-pair"><button id="sl-expand-all" type="button">Expand all</button><button id="sl-collapse-all" type="button">Collapse all</button></div></div>
+<div class="section-tools"><div class="inspo"><button id="sl-inspo" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="sl-inspo-menu">Inspiration</button><div id="sl-inspo-menu" class="inspo-menu" role="menu" hidden></div></div><div class="tool-pair"><button id="sl-expand-all" type="button">Expand all</button><button id="sl-collapse-all" type="button">Collapse all</button></div></div><div id="sl-paste-panel" class="paste-panel" hidden><label for="sl-paste-text">Paste a smoothie</label><textarea id="sl-paste-text" placeholder="Paste a smoothie from Copy Smoothie (or from Claude), one ingredient per line."></textarea><div class="paste-actions"><button type="button" id="sl-paste-go" class="paste-go">Fill it in</button><button type="button" id="sl-paste-cancel" class="paste-cancel">Cancel</button></div><div id="sl-paste-result" class="paste-result" aria-live="polite"></div></div>
 ${section('1. Start with a Splash',`<div class="cols">${selectField('milk','Milk & More #1',[['','None'],...Object.entries(milk).map(([k,x])=>[k,x[0]]),['other','Other (manual entry)']])}<div id="sl-milk-qty-holder">${selectField('milk-qty','Quantity',[['','Select quantity']])}</div></div>${manual('milk','Name and quantity')}<div class="cols">${selectField('milk-2','Milk & More #2',[['','None'],...Object.entries(milk).map(([k,x])=>[k,x[0]]),['other','Other (manual entry)']])}<div id="sl-milk-qty-2-holder">${selectField('milk-qty-2','Quantity',[['','Select quantity']])}</div></div>${manual('milk2','Name and quantity')}`)}
 ${section('2. Shake It Up',`<div class="cols">${selectField('shake','Protein shake',[['','None'],...Object.entries(shakes).map(([k,x])=>[k,x[0]])])}${selectField('shake-qty','Quantity',[['','Select quantity']])}</div><div class="field hidden" id="sl-shake-flavor-holder">${selectField('shake-flavor','Flavor',[['','Select flavor']])}<div class="field hidden" id="sl-shake-other-wrap">${field('shake-other','Other flavor',inp('shake-other','Flavor'))}</div></div>`)}
 ${section('3. Power Boost',`<div class="cols">${selectField('powder','Protein Powder',[['','None'],...Object.entries(powders).map(([k,x])=>[k,x[0]]),['other','Other (manual entry)']])}${selectField('powder-qty','Quantity',[['','Select quantity']])}</div><div id="sl-powder-flavor-holder" class="field hidden">${selectField('powder-flavor','Flavor',[['','Select flavor']])}<div class="field hidden" id="sl-powder-other-wrap">${field('powder-other','Other flavor',inp('powder-other','Flavor'))}</div></div>${manual('powder','Product and quantity')}`)}
@@ -377,11 +387,68 @@ function applyInspiration(r){
  resetLayout();touched.forEach(el=>{const d=el.closest('details.section');if(d)d.open=true;});
 }
 function closeInspo(focusBtn){inspoMenu.hidden=true;inspoBtn.setAttribute('aria-expanded','false');if(focusBtn)inspoBtn.focus();}
-inspoMenu.innerHTML='<button type="button" role="menuitem" class="inspo-clear" data-i="clear">Clear All</button><hr>'+
+inspoMenu.innerHTML='<button type="button" role="menuitem" class="inspo-clear" data-i="clear">Clear All</button><button type="button" role="menuitem" class="inspo-clear" data-i="paste">Paste a smoothie</button><hr>'+
  ['Smoothies','Yogurt bowls'].map(cat=>{const list=inspirations.map((r,i)=>[r,i]).filter(([r])=>(r.category||'Smoothies')===cat).sort((a,b)=>a[0].name.localeCompare(b[0].name,'en',{sensitivity:'base'}));return list.length?`<div class="inspo-head" role="presentation">${cat}</div>`+list.map(([r,i])=>`<button type="button" role="menuitem" data-i="${i}">${r.name}</button>`).join(''):'';}).filter(Boolean).join('<hr>');
 inspoBtn.addEventListener('click',()=>{const open=inspoMenu.hidden;inspoMenu.hidden=!open;inspoBtn.setAttribute('aria-expanded',String(open));if(open)inspoMenu.querySelector('button').focus();});
-inspoMenu.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.i==='clear'){get('clear').click();resetLayout();}else applyInspiration(inspirations[Number(b.dataset.i)]);closeInspo(true);});
+inspoMenu.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.i==='paste'){closeInspo(false);openPaste();return;}if(b.dataset.i==='clear'){get('clear').click();resetLayout();}else applyInspiration(inspirations[Number(b.dataset.i)]);closeInspo(true);});
 document.addEventListener('click',e=>{if(!inspoMenu.hidden&&!e.target.closest('.inspo'))closeInspo(false);});
+// Paste a smoothie: matches each pasted line against every line the Lab itself can write, then fills those fields. No AI, all on the phone.
+let pasteIndex=null;
+const pasteNorm=t=>t.replace(/^[\s•*\-–]+/,'').replace(/\s*[–—-]\s*~?\d+(\.\d+)?\s*cal\s*$/i,'').replace(/\s*\(calories only\)\s*/i,' ').replace(/\s+/g,' ').trim().toLowerCase();
+function pasteSet(id,v){const el=get(id);if(!el)return false;el.value=v;el.dispatchEvent(new Event('input',{bubbles:true}));return el.value===v;}
+function pasteFirstLine(){const l=root.querySelector('#sl-ingredients .summary-line:not(.needs-line) span');return l?l.textContent.replace(/\s*\(calories only\)\s*$/i,'').trim():'';}
+function buildPasteIndex(){
+ const idx=new Map(),rec=steps=>{const t=pasteNorm(pasteFirstLine());if(t&&!idx.has(t))idx.set(t,steps.slice());};
+ get('clear').click();
+ const vis=el=>el&&el.tagName==='SELECT'&&!el.closest('.hidden')&&el.options.length>1;
+ const prims=[...root.querySelectorAll('#smoothie-lab-calculator select')].map(e=>e.id.slice(3)).filter(id=>!/(^|-)qty(-|$)|-flavor$/.test(id)&&!/^(fruit-[23]|milk-2|kick-2|top-other-\d)$/.test(id));
+ prims.forEach(pid=>{const p=get(pid);if(!p)return;
+  [...p.options].map(o=>o.value).filter(v=>v&&!/^other$/i.test(v)).forEach(v=>{
+   pasteSet(pid,v);
+   const qid=[pid+'-qty',pid.replace(/-(\d+)$/,'-qty-$1'),pid.replace(/-type$/,'-qty')].find(c=>c!==pid&&get(c));
+   const withFlavor=base=>{rec(base);const fid=pid+'-flavor',f=get(fid);if(vis(f)){[...f.options].map(o=>o.value).filter(x=>x&&!/^other$/i.test(x)).forEach(x=>{pasteSet(fid,x);rec(base.concat([[fid,x]]));});pasteSet(fid,'');}};
+   const q=qid&&get(qid);
+   if(vis(q)){[...q.options].map(o=>o.value).filter(x=>x&&x!=='grams').forEach(x=>{pasteSet(qid,x);withFlavor([[pid,v],[qid,x]]);});pasteSet(qid,'');}
+   else withFlavor([[pid,v]]);
+  });
+  pasteSet(pid,'');
+ });
+ extras.forEach((name,i)=>{const c=get('extra-'+i);if(!c)return;c.checked=true;c.dispatchEvent(new Event('change',{bubbles:true}));rec([['extra-'+i,'checked']]);c.checked=false;c.dispatchEvent(new Event('change',{bubbles:true}));});
+ get('clear').click();return idx;}
+const pasteRows={fruit:[['fruit-1','fruit-qty-1','fruit-grams-1'],['fruit-2','fruit-qty-2','fruit-grams-2'],['fruit-3','fruit-qty-3','fruit-grams-3']],milk:[['milk','milk-qty'],['milk-2','milk-qty-2']],kick:[['kick-1','kick-qty-1'],['kick-2','kick-qty-2']]};
+function applyPaste(text){
+ const original=text;
+ if(!pasteIndex)pasteIndex=buildPasteIndex();
+ get('clear').click();get('paste-text').value=original;
+ let notes='';const nm=text.match(/(^|\n)\s*notes?:\s*([\s\S]*)$/i);if(nm){notes=nm[2].trim();text=text.slice(0,nm.index);}
+ const used={fruit:0,milk:0,kick:0},filled=[],custom=[],missed=[];let customSlot=1;const touched=new Set();
+ const remap=(steps)=>{const first=steps[0][0];const fam=first.startsWith('fruit-')?'fruit':/^milk(-2)?$/.test(first)?'milk':first.startsWith('kick-')?'kick':null;if(!fam)return steps;const row=used[fam];if(row>=pasteRows[fam].length)return null;used[fam]++;const from=pasteRows[fam][0],to=pasteRows[fam][row];return steps.map(([id,v])=>{const k=from.indexOf(id);return[k>=0?to[k]:id,v];});};
+ text.split(/\r?\n/).forEach(raw=>{const line=raw.trim();if(!line)return;
+  if(/^(smoothie|yogurt bowl|total|protein|fiber|carbs|carbohydrates|fat|sugar|macros are)\b/i.test(line.replace(/^[•*\-–\s]+/,'')))return;
+  const key=pasteNorm(line);if(!key)return;
+  let steps=pasteIndex.get(key);
+  const ag=!steps&&key.match(/^(\d+(?:\.\d+)?)\s*g apple \(cored, skin on\)$/);
+  if(ag)steps=[['fruit-1','apple'],['fruit-qty-1','grams'],['fruit-grams-1',ag[1]]];
+  if(steps){const s2=remap(steps);if(!s2){missed.push(line);return;}
+   s2.forEach(([id,v])=>{const el=get(id);if(!el)return;if(v==='checked'){el.checked=true;el.dispatchEvent(new Event('change',{bubbles:true}));}else pasteSet(id,v);touched.add(el);});
+   filled.push(line);return;}
+  const cm=line.match(/[–—-]\s*~?(\d+(?:\.\d+)?)\s*cal\s*$/i);
+  if(cm&&customSlot<=2){const name=line.replace(/^[•*\-–\s]+/,'').replace(/\s*[–—-]\s*~?\d+(\.\d+)?\s*cal\s*$/i,'').replace(/\s*\(calories only\)\s*/i,'').trim();
+   pasteSet('custom-name-'+customSlot,name);pasteSet('custom-cal-'+customSlot,cm[1]);touched.add(get('custom-name-'+customSlot));customSlot++;custom.push(name);return;}
+  missed.push(line);});
+ if(notes){pasteSet('notes',notes);}
+ calculate();
+ resetLayout();touched.forEach(el=>{const d=el&&el.closest('details.section');if(d)d.open=true;});
+ const esc2=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ get('paste-result').innerHTML=`Filled in ${filled.length} ingredient${filled.length===1?'':'s'}${notes?' and your notes':''}.`+
+  (custom.length?`<br>Added as custom (calories only): ${custom.map(esc2).join(', ')}`:'')+
+  (missed.length?`<br><span class="bad">Couldn’t match: ${missed.map(esc2).join('; ')}</span>`:'');
+ return{filled,custom,missed};}
+function openPaste(){const pnl=get('paste-panel');pnl.hidden=false;get('paste-result').textContent='';get('paste-text').focus();}
+get('paste-cancel').addEventListener('click',()=>{get('paste-panel').hidden=true;get('paste-text').value='';get('paste-result').textContent='';});
+get('paste-go').addEventListener('click',()=>{const t=get('paste-text').value;if(!t.trim())return;get('paste-result').textContent='Reading your smoothie…';setTimeout(()=>applyPaste(t),30);});
+// Pre-filled links: ...smoothie-lab/#paste=<recipe text>
+if(location.hash.startsWith('#paste=')){try{const t=decodeURIComponent(location.hash.slice(7));history.replaceState(null,'',location.pathname+location.search);setTimeout(()=>{openPaste();get('paste-text').value=t;get('paste-result').textContent='Reading your smoothie…';setTimeout(()=>applyPaste(t),30);},0);}catch(e){}}
 inspoMenu.addEventListener('keydown',e=>{const items=[...inspoMenu.querySelectorAll('button')],i=items.indexOf(document.activeElement);if(e.key==='Escape'){e.preventDefault();closeInspo(true);}else if(e.key==='ArrowDown'){e.preventDefault();items[(i+1)%items.length].focus();}else if(e.key==='ArrowUp'){e.preventDefault();items[(i-1+items.length)%items.length].focus();}});
 
 get('clear').addEventListener('click',()=>{root.querySelectorAll('input,textarea').forEach(x=>{if(x.type==='checkbox')x.checked=false;else x.value='';});root.querySelectorAll('select').forEach(x=>x.value='');get('copy-status').textContent='';calculate();});
